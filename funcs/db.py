@@ -62,5 +62,21 @@ def get_notes_from_db() -> list:
     return result
 
 
+def delete_notes_from_db(name:str) -> list:
+    conn = psycopg2.connect(
+        dbname="notes",
+        user="postgres",
+        password="182713",
+        port="5432",
+        host="localhost"
+    )
+
+    with conn.cursor() as cursor:
+        cursor.execute("DELETE FROM public.note WHERE name_notes = (%s);", (name, ))
+
+    conn.commit()
+    conn.close()
+
+
 if __name__ == "__main__":
     get_notes_from_db()

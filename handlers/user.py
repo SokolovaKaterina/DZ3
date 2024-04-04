@@ -6,10 +6,6 @@ from funcs.db import get_notes_from_db, save_notes, delete_notes_from_db
 from init_bot import bot
 
 
-class UserState(StatesGroup):
-    state1 = State()
-
-
 @bot.message_handler(commands=["start", "help"])
 def start_help(message: telebot.types.Message):
     text = f"{get_welcome()} Я бот для заметок))\n\n" \
@@ -75,7 +71,7 @@ def process_delete_notes(message: telebot.types.Message):
     bot.send_message(message.chat.id, f"Заметка '{note_to_delete}' успешно удалена")
 
 
-@bot.message_handler(commands=["end"], state=UserState.state1)
+@bot.message_handler(commands=["end"])
 def end(message: telebot.types.Message):
     markup = telebot.types.ReplyKeyboardRemove()
     text = f"Спасибо! Пока)"
